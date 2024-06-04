@@ -14,5 +14,11 @@ class MovieService {
     const movies = await this.movieRepository.listMovies()
     return movies
   }
+
+  async getMovieById(id: number) {
+    const movie = await this.movieRepository.getMovieById(id)
+    if (!movie) throw createError(404, 'Movie not found')
+    return movie
+  }
 }
 export default MovieService

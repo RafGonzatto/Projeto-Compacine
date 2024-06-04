@@ -23,7 +23,25 @@ const movieController = container.resolve(MovieController)
  *         description: Returns a list of all movies.
  *       '500':
  *         description: Error while listening movies.
+ * /api/v1/movies/{id}:
+ *   get:
+ *     summary: Get a movie by id
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Returns a movie by id.
+ *       '404':
+ *         description: Movie not found.
+ *       '500':
+ *         description: Error while getting movie.
  */
 router.get('/movies', movieController.listMovies.bind(movieController))
+router.get('/movies/:id', movieController.getMovieById.bind(movieController))
 
 export default router

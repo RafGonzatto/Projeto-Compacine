@@ -14,5 +14,9 @@ class MovieRepository implements IMovieRepository {
   async listMovies() {
     return this.repository.find()
   }
+
+  async getMovieById(id: number) {
+    return this.repository.findOne({ where: { id } })
+  }
 }
 export default MovieRepository
