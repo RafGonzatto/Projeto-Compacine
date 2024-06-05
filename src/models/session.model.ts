@@ -17,7 +17,7 @@ export class Session extends BaseEntity implements ISession {
   @Column({ type: 'varchar', unique: true })
   room!: string
 
-  @Column({ type: 'integer', length: 255 })
+  @Column({ type: 'integer'})
   capacity!: number
 
   @Column({ type: 'varchar', unique: true })

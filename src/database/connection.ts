@@ -10,10 +10,11 @@ const { DB_PATH } = process.env
 if (!DB_PATH) {
   throw new Error('DB_PATH must be defined in the environment variables')
 }
+const srcDir = path.resolve(__dirname, '..', '..', 'src')
 
 const AppDataSource = new DataSource({
   type: 'sqlite',
-  database: path.resolve(__dirname, DB_PATH),
+  database: path.join(srcDir, DB_PATH),
   synchronize: false,
   logging: true,
   entities: RepositorioModels,
