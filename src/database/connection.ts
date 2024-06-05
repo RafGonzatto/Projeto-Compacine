@@ -17,7 +17,7 @@ const AppDataSource = new DataSource({
   synchronize: false,
   logging: true,
   entities: RepositorioModels,
-  migrations: ['dist/migrations/*.js'],
+  migrations: ['dist/database/migrations/*.js'],
 })
 
 export default AppDataSource

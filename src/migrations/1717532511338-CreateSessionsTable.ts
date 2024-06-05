@@ -8,26 +8,26 @@ export class CreateSessionsTable1717532511338 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'INTEGER',
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'increment',
           },
           {
             name: 'room',
-            type: 'varchar',
+            type: 'VARCHAR',
           },
           {
             name: 'capacity',
-            type: 'int',
+            type: 'INTEGER',
           },
           {
             name: 'day',
-            type: 'date',
+            type: 'VARCHAR',
           },
           {
             name: 'time',
-            type: 'time',
+            type: 'VARCHAR',
           },
         ],
       }),
