@@ -20,5 +20,11 @@ class MovieService {
     if (!movie) throw createError(404, 'Movie not found')
     return movie
   }
+
+  async updateMovie(id: number, movie: IMovie) {
+    const updatedMovie = await this.movieRepository.updateMovie(id, movie)
+    if (!updatedMovie) throw createError(404, 'Movie not found')
+    return updatedMovie
+  }
 }
 export default MovieService

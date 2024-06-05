@@ -24,6 +24,16 @@ class MovieController {
       return res.status(500).json({ error: 'Error while getting movie' })
     }
   }
+
+  async updateMovie(req: Request, res: Response) {
+    try {
+      const service = container.resolve(MovieService)
+      const movie = await service.updateMovie(Number(req.params.id), req.body)
+      return res.status(200).json(movie)
+    } catch (error) {
+      return res.status(500).json({ error: 'Error while updating movie' })
+    }
+  }
 }
 
 export default MovieController

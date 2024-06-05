@@ -18,5 +18,14 @@ class MovieRepository implements IMovieRepository {
   async getMovieById(id: number) {
     return this.repository.findOne({ where: { id } })
   }
+
+  async updateMovie(id: number, movie: IMovie) {
+    const Movie = await this.getMovieById(id)
+    if (!Movie) return null
+    else {
+      await this.repository.update(Movie.id, movie)
+      return await this.getMovieById(id)
+    }
+  }
 }
 export default MovieRepository
