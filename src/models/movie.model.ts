@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 //import { Session } from './Session';
 import { IMovie } from '../interfaces/movie.interface'
+import { Session } from './session.model'
 
 @Entity('Movie')
 export class Movie extends BaseEntity implements IMovie {
@@ -33,8 +34,8 @@ export class Movie extends BaseEntity implements IMovie {
   @Column({ type: 'datetime' })
   release_date!: Date
 
-  // @OneToMany(() => Session, (session) => session.movie)
-  // sessions!: Session[];
+  @OneToMany(() => Session, (session) => session.movie)
+  sessions!: Session[]
 
   @BeforeInsert()
   @BeforeUpdate()

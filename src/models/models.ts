@@ -1,4 +1,4 @@
 import { Movie } from './movie.model'
-import { Ticket } from './ticket.model'
+import { Session } from './session.model'
 
-export const RepositorioModels = [Movie, Ticket]
+export const RepositorioModels = [Movie, Session]
