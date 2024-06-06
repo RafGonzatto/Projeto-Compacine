@@ -15,7 +15,7 @@ type UpdateTicketRequest = {
 
 export interface ITicketRepository {
   findById(id: number): Promise<Ticket | null>
-  findSessionsChair(session_id: number,  chair: string): Promise<Ticket | null>
+  findSessionsChair(session_id: number, chair: string): Promise<Ticket | null>
   createTicket(data: CreateTicketRequest): Promise<ITicket>
   updateTicket(data: UpdateTicketRequest): Promise<Ticket>
   deleteTicket(id: number): Promise<void>

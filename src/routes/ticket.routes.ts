@@ -49,17 +49,19 @@ const ticketController = container.resolve(TicketController)
  *                 example: 10
  *     responses:
  *       '200':
- *         description: Paciente atualizado com sucesso
+ *         description: Ticket created with success
  *       '400':
- *         description: O nome e a espécie do paciente são obrigatórios
+ *         description: Bad request, the request body is invalid
  *       '404':
- *         description: Paciente ou tutor não encontrado
- *       '422':
- *         description: Formato de data inválido
- *       '500':
- *         description: Erro ao atualizar paciente
+ *         description: Session not found
+ *       '409':
+ *         description: Chair already taken in this session
  */
 
-router.post('/movies/:movie_id/sessions/:session_id/tickets', ticketMiddleware, ticketController.createTicket.bind(ticketController))
+router.post(
+  '/movies/:movie_id/sessions/:session_id/tickets',
+  ticketMiddleware,
+  ticketController.createTicket.bind(ticketController),
+)
 
 export default router

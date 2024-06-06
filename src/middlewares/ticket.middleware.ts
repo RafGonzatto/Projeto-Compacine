@@ -10,7 +10,7 @@ export const ticketMiddleware = (
   const validation = ticketSchema.safeParse({
     session_id: session_id,
     chair: chair,
-    value: value
+    value: value,
   })
 
   if (!validation.success) {
@@ -18,10 +18,14 @@ export const ticketMiddleware = (
       session_id: 1,
       chair: 'b1',
       value: 10,
-    };
-    const errorMessages = validation.error.errors.map((error: { message: any }) => error.message)
+    }
+    const errorMessages = validation.error.errors.map(
+      (error: { message: any }) => error.message,
+    )
     const errorMessage = errorMessages.join(', ')
-    return res.status(400).json({ code: 400,error: errorMessage, exampleTicket })
+    return res
+      .status(400)
+      .json({ code: 400, error: errorMessage, exampleTicket })
   }
   next()
 }

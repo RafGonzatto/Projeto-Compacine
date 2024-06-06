@@ -1,4 +1,3 @@
-
 import AppDataSource from '../database/connection'
 import { Ticket } from '../models/ticket.model'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
@@ -15,20 +14,18 @@ class TicketRepository implements ITicketRepository {
     const ticket = await this.repository.findOne({ where: { id: id } })
     return ticket
   }
-  async findSessionsChair( session_id: number,  chair: string) {
+  async findSessionsChair(session_id: number, chair: string) {
     const sessionsChair = await this.repository.findOne({
-      where: { session_id: session_id, chair : chair },
+      where: { session_id: session_id, chair: chair },
     })
     return sessionsChair
   }
-
 
   async createTicket(ticketData: {
     chair: string
     value: number
     session_id: number
   }) {
-    console.log("////////////////////////////////////////////DEU PAU AQUI")
     const { chair, value, session_id } = ticketData
     const ticket = this.repository.create({
       chair: chair,
