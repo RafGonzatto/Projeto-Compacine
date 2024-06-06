@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import SessionService from 'services/session.service'
 import { container } from 'tsyringe'
+import { CreateHttpError } from 'http-errors'
 
 class SessionController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -19,8 +20,16 @@ class SessionController {
       })
 
       return res.status(201).json(session)
-    } catch (error) {
-      return res.status(500).json({ error: 'Error while creating sessions' })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
     }
   }
 
@@ -31,11 +40,26 @@ class SessionController {
 
       const service = container.resolve(SessionService)
 
-      const session = await service.updateSession(id, movie_id, room, capacity, day, time)
+      const session = await service.updateSession(
+        id,
+        movie_id,
+        room,
+        capacity,
+        day,
+        time,
+      )
 
       return res.status(200).json(session)
-    } catch (error) {
-      return res.status(500).json({ error: 'Error while updating sessions' })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
     }
   }
 
@@ -48,8 +72,16 @@ class SessionController {
       await service.deleteSession({ id })
 
       return res.status(204).json([])
-    } catch (error) {
-      return res.status(500).json({ error: 'Error while deleting sessions' })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
     }
   }
 }
