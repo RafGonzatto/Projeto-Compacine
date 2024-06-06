@@ -22,8 +22,16 @@ const router = Router()
  *       '500':
  *         description: Error while listening movies.
  */
-router.post('/movies/:movie_id/sessions', sessionMiddleware, SessionController.create)
-router.put('/movies/:movie_id/sessions/:id', sessionMiddleware, SessionController.update)
-router.delete('/movies/:movie_id/sessions/:id', sessionMiddleware, SessionController.delete)
+router.post(
+  '/movies/:movie_id/sessions',
+  sessionMiddleware,
+  SessionController.create,
+)
+router.put(
+  '/movies/:movie_id/sessions/:id',
+  sessionMiddleware,
+  SessionController.update,
+)
+router.delete('/movies/:movie_id/sessions/:id', SessionController.delete)
 
 export default router
