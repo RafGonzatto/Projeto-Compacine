@@ -7,16 +7,6 @@ const ticketSchema = z.object({
   value: z.number().positive(),  
 });
 
-const exampleTicket = {
-  session_id: 1,
-  chair: 'b1',
-  value: 10,
-};
 
-try {
-  ticketSchema.parse(exampleTicket);
-  console.log('O objeto é válido!');
-} catch (e) {
-  console.error('Erro de validação:', e);
-}
+
 export { ticketSchema }
