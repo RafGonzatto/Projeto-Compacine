@@ -63,5 +63,41 @@ router.post(
   ticketMiddleware,
   ticketController.createTicket.bind(ticketController),
 )
-
+/**
+ * @swagger
+ * /api/v1/movies/{movie_id}/sessions/{session_id}/tickets/{id}:
+ *   delete:
+ *     summary: Delete a ticket
+ *     tags: [Tickets]
+ *     parameters:
+ *       - in: path
+ *         name: movie_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Movie's Id
+ *       - in: path
+ *         name: session_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Session's id
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Ticket's id
+ *     responses:
+ *       '200':
+ *         description: Ticket deleted with success
+ *       '404':
+ *         description: Ticket not found with this id and session
+ *       '500':
+ *         description: Error while deleting ticket
+ */
+router.delete(
+  '/movies/:movie_id/sessions/:session_id/tickets/:id',
+  ticketController.deleteTicket.bind(ticketController),
+)
 export default router

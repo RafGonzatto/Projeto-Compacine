@@ -60,11 +60,11 @@ class TicketRepository implements ITicketRepository {
     return this.saveTicket(ticket)
   }
 
-  async deleteTicket(id: number) {
-    const result = await this.repository.delete({ id })
-    if (result.affected === 0) {
-      throw new Error('Ticket not found')
-    }
+  async deleteTicket(ticketData: { id: number; session_id: number }) {
+    return await this.repository.delete({
+      id: ticketData.id,
+      session_id: ticketData.session_id,
+    })
   }
 
   async saveTicket(ticket: Ticket) {

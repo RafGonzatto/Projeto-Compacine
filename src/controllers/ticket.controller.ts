@@ -23,7 +23,31 @@ class TicketController {
           .status(error.status)
           .json({ code: error.status, message: error.message })
       } else {
-        console.error('Error handling listing tickets:', error)
+        console.error('Error handling creation of ticket:', error)
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
+    }
+  }
+  async deleteTicket(req: Request, res: Response) {
+    try {
+      const { session_id, id } = req.params
+
+      const ticketData = {
+        id: parseInt(id),
+        session_id: parseInt(session_id),
+      }
+      const service = container.resolve(TicketService)
+      await service.deleteTicket(ticketData)
+      return res.status(200).json({ message: 'Ticket deleted successfully' })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        console.error('Error handling deletion of ticket:', error)
         return res
           .status(500)
           .json({ code: 500, error: error.message.toString() })

@@ -1,3 +1,4 @@
+import { DeleteResult } from 'typeorm'
 import { ITicket } from '../interfaces/ticket.interface'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
 //import { ISessionRepository } from '../repositories.interfaces/session.repository.interface';
@@ -13,7 +14,12 @@ class TicketService {
     // private sessionRepository: ISessionRepository,
   ) {}
 
-  async createTicket(ticketData: any): Promise<ITicket> {
+  async createTicket(ticketData: {
+    movie_id: number
+    session_id: number
+    chair: string
+    value: number
+  }): Promise<ITicket> {
     // const session = await this.sessionRepository.findById(ticketData.session_id)
     // if (!session) {
     //   throw new createError.NotFound('Session not found')
@@ -26,8 +32,15 @@ class TicketService {
     if (existingTicket) {
       throw new createError.Conflict('Chair already taken in this session')
     }
-    console.log('ticketData', ticketData)
     return await this.ticketRepository.createTicket(ticketData)
+  }
+  async deleteTicket(ticketData: { id: number; session_id: number }) {
+    const result = await this.ticketRepository.deleteTicket(ticketData)
+    if (result.affected === 0) {
+      throw new createError.NotFound(
+        'Ticket Ticket not found with this id and session',
+      )
+    }
   }
 }
 export default TicketService
