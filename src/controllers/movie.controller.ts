@@ -19,9 +19,16 @@ class MovieController {
       const service = container.resolve(MovieService)
       const movie = await service.getMovieById(Number(req.params.id))
       return res.status(200).json(movie)
-    } catch (error) {
-      console.error('Error while getting movie:', error)
-      return res.status(500).json({ error: 'Error while getting movie' })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
     }
   }
 
@@ -30,8 +37,16 @@ class MovieController {
       const service = container.resolve(MovieService)
       const movie = await service.updateMovie(Number(req.params.id), req.body)
       return res.status(200).json(movie)
-    } catch (error) {
-      return res.status(500).json({ error: 'Error while updating movie' })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
     }
   }
 }

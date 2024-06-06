@@ -107,6 +107,10 @@ const movieController = container.resolve(MovieController)
  */
 router.get('/movies', movieController.listMovies.bind(movieController))
 router.get('/movies/:id', movieController.getMovieById.bind(movieController))
-router.put('/movies/:id', movieController.updateMovie.bind(movieController))
+router.put(
+  '/movies/:id',
+  movieMiddleware,
+  movieController.updateMovie.bind(movieController),
+)
 
 export default router

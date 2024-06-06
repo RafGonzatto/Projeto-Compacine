@@ -2,19 +2,16 @@ import { z } from 'zod'
 
 const movieSchema = z.object({
   id: z.number().optional(),
-  image: z
-    .string()
-    .url('URL da imagem inválida')
-    .nonempty('Imagem é obrigatória'),
-  name: z.string().nonempty('Nome é obrigatório'),
+  image: z.string().url('Invalid image URL').nonempty('Image URL is required'),
+  name: z.string().nonempty('Name is required'),
   description: z
     .string()
-    .max(100, 'A descrição do filme não pode exceder 100 caracteres')
-    .nonempty('Descrição é obrigatória'),
+    .max(100, 'The description must have at most 100 characters')
+    .nonempty('Descption is required'),
   actors: z
-    .array(z.string().nonempty('Ator não pode ser vazio'))
-    .nonempty('Pelo menos um ator é obrigatório'),
-  genre: z.string().nonempty('Gênero é obrigatório'),
+    .array(z.string().nonempty('Actor name is required'))
+    .nonempty('At least one actor is required'),
+  genre: z.string().nonempty('Genre is required'),
   release_date: z.preprocess(
     (arg) => {
       if (typeof arg === 'string' || arg instanceof Date) {
@@ -22,7 +19,7 @@ const movieSchema = z.object({
       }
     },
     z.date().refine((date) => !isNaN(date.getTime()), {
-      message: 'Data de lançamento inválida',
+      message: 'Date format is invalid',
     }),
   ),
   sessions: z.array(z.any()).optional(),
