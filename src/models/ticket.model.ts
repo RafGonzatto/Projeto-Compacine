@@ -6,10 +6,12 @@ import {
   PrimaryGeneratedColumn,
   BeforeInsert,
   BeforeUpdate,
+  JoinColumn,
   Unique,
 } from 'typeorm'
 import { Session } from './session.model';
 import { ITicket } from '../interfaces/ticket.interface'
+
 @Entity('Ticket')
 @Unique(['session', 'chair'])
 export class Ticket extends BaseEntity implements ITicket {
@@ -25,18 +27,19 @@ export class Ticket extends BaseEntity implements ITicket {
   @Column()
   value!: number
 
-  @ManyToOne(() => Session, session => session.ticket )
+  @ManyToOne(() => Session, session => session.ticket)
+  @JoinColumn({ name: 'session_id' }) 
   session!: Session;
 
   @BeforeInsert()
   @BeforeUpdate()
-      async checkUniqueChairPerSession() {
-        const ticket = await Ticket.findOne({
-          where: { session: this.session, chair: this.chair },
-        });
+  async checkUniqueChairPerSession() {
+    const ticket = await Ticket.findOne({
+      where: { session: this.session, chair: this.chair },
+    });
 
-        if (ticket) {
-          throw new Error('Chair already taken in this session');
-        }
-      }
+    if (ticket) {
+      throw new Error('Chair already taken in this session');
+    }
+  }
 }

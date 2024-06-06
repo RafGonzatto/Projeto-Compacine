@@ -1,6 +1,7 @@
-import AppDataSource from 'database/connection'
-import { Ticket } from 'models/ticket.model'
-import { ITicketRepository } from 'repositories.interfaces/ticket.repository.interface'
+
+import AppDataSource from '../database/connection'
+import { Ticket } from '../models/ticket.model'
+import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
 import { Repository } from 'typeorm'
 
 class TicketRepository implements ITicketRepository {
@@ -11,33 +12,28 @@ class TicketRepository implements ITicketRepository {
   }
 
   async findById(id: number) {
-    const ticket = await this.repository.findOne({ where: { id } })
-
-    if (!ticket) {
-      throw new Error('Ticket not found')
-    }
-
+    const ticket = await this.repository.findOne({ where: { id: id } })
     return ticket
   }
+  async findSessionsChair( session_id: number,  chair: string) {
+    const sessionsChair = await this.repository.findOne({
+      where: { session_id: session_id, chair : chair },
+    })
+    return sessionsChair
+  }
 
-  async createTicket(data: {
+
+  async createTicket(ticketData: {
     chair: string
     value: number
     session_id: number
   }) {
-    const { chair, value, session_id } = data
-
-    const existingTicket = await this.repository.findOne({
-      where: { session_id, chair },
-    })
-    if (existingTicket) {
-      throw new Error('Chair already taken in this session')
-    }
-
+    console.log("////////////////////////////////////////////DEU PAU AQUI")
+    const { chair, value, session_id } = ticketData
     const ticket = this.repository.create({
-      chair,
-      value,
-      session_id,
+      chair: chair,
+      value: value,
+      session_id: session_id,
     })
 
     return this.saveTicket(ticket)
@@ -64,7 +60,6 @@ class TicketRepository implements ITicketRepository {
     if (value !== undefined) {
       ticket.value = value
     }
-
     return this.saveTicket(ticket)
   }
 
