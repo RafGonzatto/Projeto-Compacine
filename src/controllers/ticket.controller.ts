@@ -50,7 +50,7 @@ class TicketController {
           .status(error.status)
           .json({ code: error.status, message: error.message })
       } else {
-        console.error('Error handling creation of ticket:', error)
+        console.error('Error handling update of ticket:', error)
         return res
           .status(500)
           .json({ code: 500, error: error.message.toString() })

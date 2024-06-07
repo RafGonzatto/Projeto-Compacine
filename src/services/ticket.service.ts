@@ -36,42 +36,37 @@ class TicketService {
     return await this.ticketRepository.createTicket(ticketData)
   }
 
-  async updateTicket(data: {
+  async updateTicket(ticketData: {
     id: number
     session_id: number
-    chair?: string
-    value?: number
+    chair: string
+    value: number
   }): Promise<Ticket> {
-    const ticket = await this.ticketRepository.findById(data.id)
+    // const session = await this.sessionRepository.findById(ticketData.session_id)
+    // if (!session) {
+    //   throw new createError.NotFound('Session not found')
+    // }
+    const ticket = await this.ticketRepository.findById(ticketData.id)
     if (!ticket) {
-      throw new Error('Ticket not found')
+      throw new createError.NotFound('Ticket not found')
     }
-
-    if (data.chair && data.chair !== ticket.chair) {
-      const existingTicket = await this.ticketRepository.findSessionsChair(
-        data.session_id,
-        data.chair,
-      )
-      if (existingTicket) {
-        throw new Error('Chair already taken in this session')
-      }
-      ticket.chair = data.chair
+    const existingTicket = await this.ticketRepository.findSessionsChair(ticketData.session_id, ticketData.chair)
+    if (existingTicket) {
+      throw new createError.Conflict('Chair already taken in this session')
     }
-
-    if (data.value !== undefined) {
-      ticket.value = data.value
-    }
-
-    ticket.session_id = data.session_id
-
-    return await this.ticketRepository.updateTicket(ticket)
+    const updatedTicket = new Ticket()
+    updatedTicket.id = ticketData.id
+    updatedTicket.chair = ticketData.chair
+    updatedTicket.value = ticketData.value
+    updatedTicket.session_id = ticketData.session_id
+    return await this.ticketRepository.saveTicket(updatedTicket)
   }
 
   async deleteTicket(ticketData: { id: number; session_id: number }) {
     const result = await this.ticketRepository.deleteTicket(ticketData)
     if (result.affected === 0) {
       throw new createError.NotFound(
-        'Ticket Ticket not found with this id and session',
+        'Ticket not found with this id and session',
       )
     }
   }

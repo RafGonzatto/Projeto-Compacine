@@ -39,31 +39,6 @@ class TicketRepository implements ITicketRepository {
     return this.saveTicket(ticket)
   }
 
-  async updateTicket(data: {
-    id: number
-    session_id: number
-    chair?: string
-    value?: number
-  }): Promise<Ticket> {
-    const ticket = await this.findById(data.id)
-
-    if (ticket) {
-      if (data.chair) {
-        ticket.chair = data.chair
-      }
-
-      if (data.value) {
-        ticket.value = data.value
-      }
-
-      ticket.session_id = data.session_id
-
-      return this.saveTicket(ticket)
-    }
-
-    throw new Error('Ticket not found')
-  }
-
   async deleteTicket(ticketData: { id: number; session_id: number }) {
     return await this.repository.delete({
       id: ticketData.id,
