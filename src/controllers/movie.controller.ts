@@ -34,6 +34,45 @@ class MovieController {
       return res.status(500).json({ error: 'Error while updating movie' })
     }
   }
+
+  async createMovie(req: Request, res: Response) {
+    try {
+      const service = container.resolve(MovieService)
+      const newMovie = await service.createMovie(req.body)
+      return res.status(200).json(newMovie)
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        console.error('Error creating a movie:', error)
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
+    }
+  }
+
+  async deleteMovie(req: Request, res: Response) {
+    try {
+      const service = container.resolve(MovieService)
+      await service.deleteMovie(Number(req.params.id))
+      // eslint-disable-next-line prettier/prettier
+      return res.status(200).json({ "message": "movie removed successfully" })
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        console.error('Error deletion of movie:', error)
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
+    }
+  }
 }
 
 export default MovieController

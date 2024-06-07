@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { container } from 'tsyringe'
 import MovieController from '../controllers/movie.controller'
-import { movieMiddleware } from '../middlewares/movie.middleware'
+//import { movieMiddleware } from '../middlewares/movie.middleware'
 
 const router = Router()
 const movieController = container.resolve(MovieController)
@@ -108,5 +108,6 @@ const movieController = container.resolve(MovieController)
 router.get('/movies', movieController.listMovies.bind(movieController))
 router.get('/movies/:id', movieController.getMovieById.bind(movieController))
 router.put('/movies/:id', movieController.updateMovie.bind(movieController))
-
+router.post('/movies', movieController.createMovie.bind(movieController))
+router.delete('/movies/:id', movieController.deleteMovie.bind(movieController))
 export default router
