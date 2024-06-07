@@ -28,7 +28,7 @@ class MovieRepository implements IMovieRepository {
     if (!Movie) return null
     else {
       await this.repository.update(Movie.id, movie)
-      return await this.getMovieByName(Movie.name)
+      return await this.getMovieByName(movie.name)
     }
   }
 
