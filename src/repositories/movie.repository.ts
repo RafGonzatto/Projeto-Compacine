@@ -12,11 +12,11 @@ class MovieRepository implements IMovieRepository {
   }
 
   async listMovies() {
-    return this.repository.find()
+    return this.repository.find({ relations: ['sessions'] })
   }
 
   async getMovieById(id: number) {
-    return this.repository.findOne({ where: { id } })
+    return this.repository.findOne({ where: { id }, relations: ['sessions'] })
   }
 
   async getMovieByName(name: string) {
@@ -28,7 +28,7 @@ class MovieRepository implements IMovieRepository {
     if (!Movie) return null
     else {
       await this.repository.update(Movie.id, movie)
-      return await this.getMovieById(id)
+      return await this.getMovieByName(Movie.name)
     }
   }
 

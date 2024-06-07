@@ -1,4 +1,4 @@
-//import { Sessions } from './session.interface'
+import { ISession } from './session.interface'
 export interface IMovie {
   id: number
   image: string
@@ -7,5 +7,5 @@ export interface IMovie {
   actors: string[]
   genre: string
   release_date: Date
-  //sessions: Session[]
+  sessions: ISession[]
 }

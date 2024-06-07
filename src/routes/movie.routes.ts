@@ -107,7 +107,11 @@ const movieController = container.resolve(MovieController)
  */
 router.get('/movies', movieController.listMovies.bind(movieController))
 router.get('/movies/:id', movieController.getMovieById.bind(movieController))
-router.post('/movies', movieController.createMovie.bind(movieController))
+router.post(
+  '/movies',
+  movieMiddleware,
+  movieController.createMovie.bind(movieController),
+)
 router.delete('/movies/:id', movieController.deleteMovie.bind(movieController))
 router.put(
   '/movies/:id',

@@ -7,10 +7,8 @@ export const movieMiddleware = (
   next: NextFunction,
 ) => {
   const { image, name, description, actors, genre, release_date } = req.body
-  const id = Number(req.params.id)
 
   const validation = movieSchema.safeParse({
-    id: id,
     image: image,
     name: name,
     description: description,
@@ -21,7 +19,6 @@ export const movieMiddleware = (
 
   if (!validation.success) {
     const exampleTicket = {
-      id: 1,
       image: 'https://www.example.com/image.jpg',
       name: 'Movie Name',
       description: 'Movie description',

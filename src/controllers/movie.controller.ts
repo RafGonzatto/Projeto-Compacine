@@ -9,7 +9,6 @@ class MovieController {
       const movies = await service.listMovies()
       return res.status(200).json(movies)
     } catch (error) {
-      console.error('Error while listing movies:', error)
       return res.status(500).json({ error: 'Error while listing movies' })
     }
   }
@@ -61,7 +60,6 @@ class MovieController {
           .status(error.status)
           .json({ code: error.status, message: error.message })
       } else {
-        console.error('Error creating a movie:', error)
         return res
           .status(500)
           .json({ code: 500, error: error.message.toString() })
@@ -74,14 +72,13 @@ class MovieController {
       const service = container.resolve(MovieService)
       await service.deleteMovie(Number(req.params.id))
       // eslint-disable-next-line prettier/prettier
-      return res.status(200).json({ "message": "movie removed successfully" })
+      return res.status(200).json({ message: 'movie removed successfully' })
     } catch (error: any) {
       if (error && error.status) {
         return res
           .status(error.status)
           .json({ code: error.status, message: error.message })
       } else {
-        console.error('Error deletion of movie:', error)
         return res
           .status(500)
           .json({ code: 500, error: error.message.toString() })
