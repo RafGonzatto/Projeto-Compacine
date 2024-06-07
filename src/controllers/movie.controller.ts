@@ -85,7 +85,7 @@ class MovieController {
           locale: ptBR,
         }),
       }
-      return res.status(200).json(formattedMovie)
+      return res.status(201).json(formattedMovie)
     } catch (error: any) {
       if (error && error.status) {
         return res
@@ -104,7 +104,7 @@ class MovieController {
       const service = container.resolve(MovieService)
       await service.deleteMovie(Number(req.params.id))
       // eslint-disable-next-line prettier/prettier
-      return res.status(200).json({ message: 'movie removed successfully' })
+      return res.status(204).json({ message: 'movie removed successfully' })
     } catch (error: any) {
       if (error && error.status) {
         return res

@@ -63,7 +63,25 @@ const movieController = container.resolve(MovieController)
  *       '200':
  *         description: Returns a list of all movies.
  *       '500':
- *         description: Error while listening movies.
+ *         description: Error while listing movies.
+ *   post:
+ *     summary: Create a new movie
+ *     tags: [Movies]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Movie'
+ *     responses:
+ *       '201':
+ *         description: Create the movie.
+ *       '400':
+ *         description: Invalid data.
+ *       '409':
+ *         description: It is not possible to register, the movie already exists.
+ *       '500':
+ *         description: Error while creating movie.
  * /api/v1/movies/{id}:
  *   get:
  *     summary: Get a movie by id
@@ -83,8 +101,7 @@ const movieController = container.resolve(MovieController)
  *         description: Error while getting movie.
  *   put:
  *     summary: Update a movie by id
- *     tags:
- *       - Movies
+ *     tags: [Movies]
  *     parameters:
  *       - in: path
  *         name: id
@@ -99,11 +116,31 @@ const movieController = container.resolve(MovieController)
  *             $ref: '#/components/schemas/Movie'
  *     responses:
  *       '200':
- *         description: Returns a movie updated.
+ *         description: Update the movie.
+ *       '400':
+ *         description: Invalid data.
+ *       '404':
+ *         description: Movie not found.
+ *       '409':
+ *         description: It is not possible to update, another movie has the same name.
+ *       '500':
+ *         description: Error while updating movie.
+ *   delete:
+ *     summary: Delete a movie by id
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '204':
+ *         description: Movie deleted.
  *       '404':
  *         description: Movie not found.
  *       '500':
- *         description: Error while updating movie.
+ *         description: Error while deleting movie.
  */
 router.get('/movies', movieController.listMovies.bind(movieController))
 router.get('/movies/:id', movieController.getMovieById.bind(movieController))

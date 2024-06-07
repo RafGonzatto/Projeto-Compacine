@@ -22,6 +22,14 @@ class MovieService {
   }
 
   async updateMovie(id: number, movieData: IMovie) {
+    const existingMovie = await this.movieRepository.getMovieByName(
+      movieData.name,
+    )
+    if (existingMovie && existingMovie.id !== id)
+      throw createError(
+        409,
+        'It is not possible to update, another movie has the same name',
+      )
     const updatedMovie = await this.movieRepository.updateMovie(id, movieData)
     if (!updatedMovie) throw createError(404, 'Movie not found')
     return updatedMovie
