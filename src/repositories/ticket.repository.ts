@@ -14,9 +14,12 @@ class TicketRepository implements ITicketRepository {
     const ticket = await this.repository.findOne({ where: { id: id } })
     return ticket
   }
-  async findSessionsChair(session_id: number, chair: string) {
+  async findSessionsChair(
+    session_id: number,
+    chair: string,
+  ): Promise<Ticket | null> {
     const sessionsChair = await this.repository.findOne({
-      where: { session_id: session_id, chair: chair },
+      where: { session_id, chair },
     })
     return sessionsChair
   }
@@ -36,28 +39,29 @@ class TicketRepository implements ITicketRepository {
     return this.saveTicket(ticket)
   }
 
-  async updateTicket(data: { id: number; chair?: string; value?: number }) {
-    const { id, chair, value } = data
-    const ticket = await this.repository.findOne({ where: { id } })
+  async updateTicket(data: {
+    id: number
+    session_id: number
+    chair?: string
+    value?: number
+  }): Promise<Ticket> {
+    const ticket = await this.findById(data.id)
 
-    if (!ticket) {
-      throw new Error('Ticket not found')
-    }
-
-    if (chair) {
-      const existingTicket = await this.repository.findOne({
-        where: { session_id: ticket.session_id, chair },
-      })
-      if (existingTicket && existingTicket.id !== id) {
-        throw new Error('Chair already taken in this session')
+    if (ticket) {
+      if (data.chair) {
+        ticket.chair = data.chair
       }
-      ticket.chair = chair
+
+      if (data.value) {
+        ticket.value = data.value
+      }
+
+      ticket.session_id = data.session_id
+
+      return this.saveTicket(ticket)
     }
 
-    if (value !== undefined) {
-      ticket.value = value
-    }
-    return this.saveTicket(ticket)
+    throw new Error('Ticket not found')
   }
 
   async deleteTicket(ticketData: { id: number; session_id: number }) {

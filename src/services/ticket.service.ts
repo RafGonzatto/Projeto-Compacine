@@ -4,6 +4,7 @@ import { ITicketRepository } from '../repositories.interfaces/ticket.repository.
 //import { ISessionRepository } from '../repositories.interfaces/session.repository.interface';
 import createError from 'http-errors'
 import { inject, injectable } from 'tsyringe'
+import { Ticket } from 'models/ticket.model'
 
 @injectable()
 class TicketService {
@@ -34,6 +35,38 @@ class TicketService {
     }
     return await this.ticketRepository.createTicket(ticketData)
   }
+
+  async updateTicket(data: {
+    id: number
+    session_id: number
+    chair?: string
+    value?: number
+  }): Promise<Ticket> {
+    const ticket = await this.ticketRepository.findById(data.id)
+    if (!ticket) {
+      throw new Error('Ticket not found')
+    }
+
+    if (data.chair && data.chair !== ticket.chair) {
+      const existingTicket = await this.ticketRepository.findSessionsChair(
+        data.session_id,
+        data.chair,
+      )
+      if (existingTicket) {
+        throw new Error('Chair already taken in this session')
+      }
+      ticket.chair = data.chair
+    }
+
+    if (data.value !== undefined) {
+      ticket.value = data.value
+    }
+
+    ticket.session_id = data.session_id
+
+    return await this.ticketRepository.updateTicket(ticket)
+  }
+
   async deleteTicket(ticketData: { id: number; session_id: number }) {
     const result = await this.ticketRepository.deleteTicket(ticketData)
     if (result.affected === 0) {

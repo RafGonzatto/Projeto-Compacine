@@ -1,5 +1,16 @@
 import { z } from 'zod'
 
+const createParamsSchema = z.object({
+  movie_id: z.string().transform((val) => parseInt(val, 10)),
+  session_id: z.string().transform((val) => parseInt(val, 10)),
+})
+
+const updateParamsSchema = z.object({
+  movie_id: z.string().transform((val) => parseInt(val, 10)),
+  session_id: z.string().transform((val) => parseInt(val, 10)),
+  id: z.string().transform((val) => parseInt(val, 10)),
+})
+
 const ticketSchema = z.object({
   id: z.number().optional(),
   session_id: z.number(),
@@ -7,4 +18,4 @@ const ticketSchema = z.object({
   value: z.number().positive(),
 })
 
-export { ticketSchema }
+export { createParamsSchema, updateParamsSchema, ticketSchema }

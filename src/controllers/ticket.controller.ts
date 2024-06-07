@@ -30,6 +30,34 @@ class TicketController {
       }
     }
   }
+
+  async updateTicket(req: Request, res: Response): Promise<Response> {
+    const { id, session_id } = req.params
+    const { chair, value } = req.body
+
+    try {
+      const service = container.resolve(TicketService)
+      const updatedTicket = await service.updateTicket({
+        id: parseInt(id),
+        session_id: parseInt(session_id),
+        chair,
+        value,
+      })
+      return res.status(200).json(updatedTicket)
+    } catch (error: any) {
+      if (error && error.status) {
+        return res
+          .status(error.status)
+          .json({ code: error.status, message: error.message })
+      } else {
+        console.error('Error handling creation of ticket:', error)
+        return res
+          .status(500)
+          .json({ code: 500, error: error.message.toString() })
+      }
+    }
+  }
+
   async deleteTicket(req: Request, res: Response) {
     try {
       const { session_id, id } = req.params
