@@ -9,13 +9,13 @@ type createSessionRequest = {
   movie_id: number
 }
 
-// type updateSessionRequest = {
-//   id: number
-//   room?: string
-//   capacity?: number
-//   day?: string
-//   time?: string
-// }
+type updateSessionRequest = {
+  id: number
+  room?: string
+  capacity?: number
+  day?: string
+  time?: string
+}
 
 type deleteSessionRequest = {
   id: number
@@ -27,6 +27,6 @@ export interface ISessionRepository {
   findRoomAndTime(room: string, time: string): Promise<Session | null>
   createSession(data: createSessionRequest): Promise<Session>
   saveSession(session: Session): Promise<Session>
-  //updateSession(data: updateSessionRequest): Promise<Session>
+  updateSession(data: updateSessionRequest): Promise<Session>
   deleteSession(id: deleteSessionRequest): Promise<DeleteResult>
 }

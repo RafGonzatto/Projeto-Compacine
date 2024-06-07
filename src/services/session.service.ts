@@ -38,7 +38,32 @@ class SessionService {
     return this.sessionRepository.createSession(sessionData)
   }
 
-  async updateSession() {}
+  async updateSession(sessionData: {
+    id: number
+    room: string
+    capacity: number
+    day: string
+    time: string
+  }) {
+    const verifySessionId = await this.sessionRepository.findById(
+      sessionData.id,
+    )
+
+    if (!verifySessionId) {
+      throw new createError.Conflict('The session does not exist')
+    }
+
+    const verifySession = await this.sessionRepository.findRoomAndTime(
+      sessionData.room,
+      sessionData.time,
+    )
+
+    if (!verifySession) {
+      throw new createError.Conflict('The session is already in use')
+    }
+
+    return this.sessionRepository.updateSession(sessionData)
+  }
 
   async deleteSession(sessionData: { id: number; movie_id: number }) {
     // const verifyTicket = await this.ticketRepository.findSession(sessionData.id)
