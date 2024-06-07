@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { sessionSchema } from 'validators/session.validator'
+import { sessionSchema } from '../validators/session.validator'
 
 export const sessionMiddleware = (
   req: Request,

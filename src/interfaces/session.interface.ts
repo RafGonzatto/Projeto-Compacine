@@ -1,4 +1,4 @@
-//import { Ticket } from 'models/ticket.model'
+//import { Ticket } from '../models/ticket.model.ts'
 export interface ISession {
   id: number
   movie_id: number

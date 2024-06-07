@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
-import SessionService from 'services/session.service'
+import SessionService from '../services/session.service'
 import { container } from 'tsyringe'
-import { CreateHttpError } from 'http-errors'
+//import { CreateHttpError } from 'http-errors'
 
 class SessionController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { room, capacity, day, time } = req.body
-      const { movie_id } = req.params
+      const movie_id = parseInt(req.params.movie_id)
 
       const service = container.resolve(SessionService)
 
