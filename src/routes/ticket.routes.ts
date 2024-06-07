@@ -4,7 +4,7 @@ import TicketController from '../controllers/ticket.controller'
 import {
   createTicketMiddleware,
   updateTicketMiddleware,
-} from 'middlewares/ticket.middleware'
+} from '../middlewares/ticket.middleware'
 
 const router = Router()
 const ticketController = container.resolve(TicketController)
@@ -146,7 +146,7 @@ router.delete(
  *       '200':
  *         description: Ticket updated with success
  *       '400':
- *         description: Bad request, the request body is invalid
+ *         description: Bad request, the request body is invalid, or the parameters in the URL are invalid
  *       '404':
  *         description: Ticket not found
  *       '500':
