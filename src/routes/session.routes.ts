@@ -54,6 +54,82 @@ const sessionController = container.resolve(SessionController)
  *       500:
  *         description: Error while creating the session.
  */
+
+/**
+ * @swagger
+ * /api/v1/movies/{movie_id}/sessions/{id}:
+ *   put:
+ *     summary: Edit a session
+ *     tags: [Sessions]
+ *     parameters:
+ *       - in: path
+ *         name: movie_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the movie
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the session
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              type: object
+ *             properties:
+ *               room:
+ *                 type: string
+ *                 example: "room 1"
+ *               capacity:
+ *                 type: integer
+ *                 example: 150
+ *               day:
+ *                 type: string
+ *                 example: "07/06/2024"
+ *               time:
+ *                 type: string
+ *                 example: "20:00:00"
+ *     responses:
+ *       '200':
+ *         description: Returns the session body.
+ *       '404':
+ *         description: Movie or session not found.
+ *       '500':
+ *         description: Error while updating the sessions.
+ */
+
+/**
+ * @swagger
+ * /api/v1/movies/{movie_id}/sessions/{id}:
+ *   delete:
+ *     summary: Delete session
+ *     tags: [Sessions]
+ *     parameters:
+ *       - in: path
+ *         name: movie_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the movie
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the session
+ *     responses:
+ *       '200':
+ *         description: Session deleted successfully.
+ *       '404':
+ *         description: Movie or session not found.
+ *       '500':
+ *         description: Error while deleting the session.
+ */
+
 router.post(
   '/movies/:movie_id/sessions',
   sessionMiddleware,

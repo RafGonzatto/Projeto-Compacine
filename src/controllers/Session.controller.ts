@@ -35,19 +35,18 @@ class SessionController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      const { movie_id, id } = req.params
+      const id = parseInt(req.params.id)
       const { room, capacity, day, time } = req.body
 
       const service = container.resolve(SessionService)
 
-      const session = await service.updateSession(
+      const session = await service.updateSession({
         id,
-        movie_id,
         room,
         capacity,
         day,
         time,
-      )
+      })
 
       return res.status(200).json(session)
     } catch (error: any) {
@@ -65,11 +64,12 @@ class SessionController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params
+      const id = parseInt(req.params.id)
+      const movie_id = parseInt(req.params.movie_id)
 
       const service = container.resolve(SessionService)
 
-      await service.deleteSession({ id })
+      await service.deleteSession({ id, movie_id })
 
       return res.status(204).json([])
     } catch (error: any) {
