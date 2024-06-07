@@ -1,8 +1,10 @@
 import SessionController from 'controllers/Session.controller'
 import { Router } from 'express'
 import { sessionMiddleware } from 'middlewares/session.middleware'
+import { container } from 'tsyringe'
 
 const router = Router()
+const sessionController = container.resolve(SessionController)
 /**
  * @swagger
  * tags:
@@ -25,13 +27,13 @@ const router = Router()
 router.post(
   '/movies/:movie_id/sessions',
   sessionMiddleware,
-  SessionController.create,
+  sessionController.create,
 )
 router.put(
   '/movies/:movie_id/sessions/:id',
   sessionMiddleware,
-  SessionController.update,
+  sessionController.update,
 )
-router.delete('/movies/:movie_id/sessions/:id', SessionController.delete)
+router.delete('/movies/:movie_id/sessions/:id', sessionController.delete)
 
 export default router
