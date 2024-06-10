@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm'
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm'
 
 export class CreateSessionsTable1717532511338 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -8,28 +13,41 @@ export class CreateSessionsTable1717532511338 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'INTEGER',
+            type: 'integer',
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'increment',
           },
           {
+            name: 'movie_id',
+            type: 'integer',
+          },
+          {
             name: 'room',
-            type: 'VARCHAR',
+            type: 'varchar',
           },
           {
             name: 'capacity',
-            type: 'INTEGER',
+            type: 'integer',
           },
           {
             name: 'day',
-            type: 'VARCHAR',
+            type: 'varchar',
           },
           {
             name: 'time',
-            type: 'VARCHAR',
+            type: 'varchar',
           },
         ],
+      }),
+    )
+    await queryRunner.createForeignKey(
+      'Session',
+      new TableForeignKey({
+        columnNames: ['movie_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'Movie',
+        onDelete: 'CASCADE',
       }),
     )
   }
