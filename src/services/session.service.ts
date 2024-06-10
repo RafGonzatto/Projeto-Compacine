@@ -1,16 +1,14 @@
 import { ISession } from '../interfaces/session.interface'
-import { ISessionRepository } from 'repositories.interfaces/session.repository.interface'
+import { ISessionRepository } from '../repositories.interfaces/session.repository.interface'
 import { inject, injectable } from 'tsyringe'
 import createError from 'http-errors'
-import { ITicketRepository } from 'repositories.interfaces/ticket.repository.interface'
+// import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
 
 @injectable()
 class SessionService {
   constructor(
-    @inject('SessionRepository')
-    private sessionRepository: ISessionRepository,
-    @inject('TicketRepository')
-    private ticketRepository: ITicketRepository,
+    @inject('SessionRepository') private sessionRepository: ISessionRepository,
+    // @inject('TicketRepository') private ticketRepository: ITicketRepository,
   ) {}
 
   async createSession(sessionData: {
