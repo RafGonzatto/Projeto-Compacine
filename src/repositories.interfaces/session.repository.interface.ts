@@ -1,5 +1,5 @@
 import { DeleteResult } from 'typeorm'
-import { Session } from '../models/session.model'
+import { Session } from '../entitys/session.entity'
 
 type createSessionRequest = {
   room: string

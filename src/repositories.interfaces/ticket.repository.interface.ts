@@ -1,4 +1,6 @@
-import { Ticket } from 'models/ticket.model'
+import { Ticket } from '../entitys/ticket.entity'
+import { ITicket } from '../interfaces/ticket.interface'
+import { DeleteResult } from 'typeorm'
 
 type CreateTicketRequest = {
   chair: string
@@ -6,16 +8,14 @@ type CreateTicketRequest = {
   session_id: number
 }
 
-type UpdateTicketRequest = {
+type DeleteTicketRequest = {
   id: number
-  chair?: string
-  value?: number
+  session_id: number
 }
-
 export interface ITicketRepository {
   findById(id: number): Promise<Ticket | null>
-  createTicket(data: CreateTicketRequest): Promise<Ticket>
-  updateTicket(data: UpdateTicketRequest): Promise<Ticket>
-  deleteTicket(id: number): Promise<void>
+  findSessionsChair(session_id: number, chair: string): Promise<Ticket | null>
+  createTicket(data: CreateTicketRequest): Promise<ITicket>
+  deleteTicket(data: DeleteTicketRequest): Promise<DeleteResult>
   saveTicket(ticket: Ticket): Promise<Ticket>
 }

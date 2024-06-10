@@ -8,8 +8,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Movie } from './movie.model'
-import { Ticket } from './ticket.model'
+import { Movie } from './movie.entity'
+import { Ticket } from './ticket.entity'
 
 @Entity('Session')
 export class Session extends BaseEntity implements ISession {

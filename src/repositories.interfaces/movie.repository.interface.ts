@@ -1,4 +1,4 @@
-import { Movie } from 'models/movie.model'
+import { Movie } from 'entitys/movie.entity'
 import { IMovie } from 'interfaces/movie.interface'
 interface IMovieRepository {
   listMovies(): Promise<Movie[]>
