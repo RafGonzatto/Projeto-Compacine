@@ -5,7 +5,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-//import { Session } from './Session';
 import { IMovie } from '../interfaces/movie.interface'
 import { Session } from './session.model'
 
