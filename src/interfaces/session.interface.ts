@@ -1,4 +1,5 @@
-//import { Ticket } from '../models/ticket.entity.ts'
+import { Ticket } from "entitys/ticket.entity"
+
 export interface ISession {
   id: number
   movie_id: number
@@ -6,5 +7,5 @@ export interface ISession {
   capacity: number
   day: string
   time: string
-  //tickets: Ticket[]
+  tickets?: Ticket[]
 }

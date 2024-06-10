@@ -11,7 +11,7 @@ import { Session } from './session.entity'
 import { ITicket } from '../interfaces/ticket.interface'
 
 @Entity('Ticket')
-@Unique(['session', 'chair'])
+@Unique(['session_id', 'chair'])
 export class Ticket extends BaseEntity implements ITicket {
   @PrimaryGeneratedColumn()
   id!: number

@@ -1,5 +1,6 @@
 import { ISession } from '../interfaces/session.interface'
 import { ISessionRepository } from '../repositories.interfaces/session.repository.interface'
+import IMovieRepository from '../repositories.interfaces/movie.repository.interface'
 import { inject, injectable } from 'tsyringe'
 import createError from 'http-errors'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
@@ -80,14 +81,6 @@ class SessionService {
   }
 
   async deleteSession(sessionData: { id: number; movie_id: number }) {
-    // const verifyTicket = await this.ticketRepository.findSession(sessionData.id)
-
-    // if (verifyTicket > 0) {
-    //   throw new createError.Conflict(
-    //     'The session cannot be deleted with associated tickets',
-    //   )
-    // }
-
     return await this.sessionRepository.deleteSession(sessionData)
   }
 }

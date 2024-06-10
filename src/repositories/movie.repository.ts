@@ -12,7 +12,7 @@ class MovieRepository implements IMovieRepository {
   }
 
   async listMovies() {
-    return this.repository.find({ relations: ['sessions'] })
+    return this.repository.find({ relations: ['sessions.tickets'] })
   }
 
   async getMovieById(id: number) {
