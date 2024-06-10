@@ -4,8 +4,6 @@ import {
   BaseEntity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  BeforeInsert,
-  BeforeUpdate,
   JoinColumn,
   Unique,
 } from 'typeorm'
@@ -27,7 +25,7 @@ export class Ticket extends BaseEntity implements ITicket {
   @Column()
   value!: number
 
-  @ManyToOne(() => Session, (session) => session.ticket)
+  @ManyToOne(() => Session, (session) => session.tickets)
   @JoinColumn({ name: 'session_id' })
   session!: Session
 }

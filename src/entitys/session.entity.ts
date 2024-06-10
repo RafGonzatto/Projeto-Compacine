@@ -36,5 +36,5 @@ export class Session extends BaseEntity implements ISession {
   movie!: Movie
 
   @OneToMany(() => Ticket, (ticket) => ticket.session)
-  ticket!: Ticket[]
+  tickets?: Ticket[]
 }
