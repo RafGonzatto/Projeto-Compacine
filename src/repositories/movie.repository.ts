@@ -12,11 +12,15 @@ class MovieRepository implements IMovieRepository {
   }
 
   async listMovies() {
-    return this.repository.find()
+    return this.repository.find({ relations: ['sessions'] })
   }
 
   async getMovieById(id: number) {
-    return this.repository.findOne({ where: { id } })
+    return this.repository.findOne({ where: { id }, relations: ['sessions'] })
+  }
+
+  async getMovieByName(name: string) {
+    return this.repository.findOne({ where: { name } })
   }
 
   async updateMovie(id: number, movie: IMovie) {
@@ -24,8 +28,19 @@ class MovieRepository implements IMovieRepository {
     if (!Movie) return null
     else {
       await this.repository.update(Movie.id, movie)
-      return await this.getMovieById(id)
+      return await this.getMovieByName(movie.name)
     }
   }
+
+  async createMovie(movieData: IMovie) {
+    const newMovie = await this.repository.create(movieData)
+    await this.repository.save(newMovie)
+    return newMovie
+  }
+
+  async deleteMovie(id: number) {
+    await this.repository.delete({ id })
+  }
 }
+
 export default MovieRepository

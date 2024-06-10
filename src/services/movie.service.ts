@@ -21,10 +21,40 @@ class MovieService {
     return movie
   }
 
-  async updateMovie(id: number, movie: IMovie) {
-    const updatedMovie = await this.movieRepository.updateMovie(id, movie)
+  async updateMovie(id: number, movieData: IMovie) {
+    const existingMovie = await this.movieRepository.getMovieByName(
+      movieData.name,
+    )
+    if (existingMovie && existingMovie.id !== id)
+      throw createError(
+        409,
+        'It is not possible to update, another movie has the same name',
+      )
+    const updatedMovie = await this.movieRepository.updateMovie(id, movieData)
     if (!updatedMovie) throw createError(404, 'Movie not found')
     return updatedMovie
+  }
+
+  async createMovie(movieData: IMovie) {
+    const movieExist = await this.movieRepository.getMovieByName(movieData.name)
+    //Não é possivel cadastrar o mesmo filme duas vezes
+    if (!movieExist) {
+      const newMovie = await this.movieRepository.createMovie(movieData)
+      return newMovie
+    } else {
+      throw new createError.Conflict(
+        'It is not possible to register, the film already exists',
+      )
+    }
+  }
+
+  async deleteMovie(id: number) {
+    const movie = await this.movieRepository.getMovieById(id)
+    if (!movie) {
+      throw new createError.NotFound('Movie not found')
+    } else {
+      await this.movieRepository.deleteMovie(id)
+    }
   }
 }
 export default MovieService
