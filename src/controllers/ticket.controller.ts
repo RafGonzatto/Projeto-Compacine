@@ -68,7 +68,7 @@ class TicketController {
       }
       const service = container.resolve(TicketService)
       await service.deleteTicket(ticketData)
-      return res.status(200).json({ message: 'Ticket deleted successfully' })
+      return res.status(204).json()
     } catch (error: any) {
       if (error && error.status) {
         return res

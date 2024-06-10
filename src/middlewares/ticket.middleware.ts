@@ -10,8 +10,10 @@ const validateCreate =
   (req: Request, res: Response, next: NextFunction) => {
    
     console.log("CREATE")
-    const { session_id, chair, value } = req.body
-    const data = { session_id, chair, value }
+    
+    const { session_id } = req.params
+    const { chair, value } = req.body
+    const data = { session_id: parseInt(session_id), chair, value }
       const bodyValidation = paramsSchema.safeParse(data)
       if (!bodyValidation.success) {
         const errorMessages = bodyValidation.error.errors.map(
