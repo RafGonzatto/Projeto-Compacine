@@ -5,11 +5,12 @@ import { container } from 'tsyringe'
 
 const router = Router()
 const sessionController = container.resolve(SessionController)
+
 /**
  * @swagger
  * tags:
- *   name: Sessions
- *   description: Endpoints related to sessions
+ *   - name: Sessions
+ *     description: Endpoints related to sessions
  */
 
 /**
@@ -45,13 +46,13 @@ const sessionController = container.resolve(SessionController)
  *                 type: string
  *                 example: "19:20:00"
  *     responses:
- *       200:
+ *       '200':
  *         description: Session was successfully created.
- *       400:
+ *       '400':
  *         description: Bad request, the request body is invalid.
- *       404:
+ *       '404':
  *         description: Movie not found.
- *       500:
+ *       '500':
  *         description: Error while creating the session.
  */
 
@@ -79,7 +80,7 @@ const sessionController = container.resolve(SessionController)
  *       content:
  *         application/json:
  *           schema:
- *              type: object
+ *             type: object
  *             properties:
  *               room:
  *                 type: string
@@ -96,10 +97,12 @@ const sessionController = container.resolve(SessionController)
  *     responses:
  *       '200':
  *         description: Returns the session body.
+ *       '400':
+ *         description: Invalid request body.
  *       '404':
  *         description: Movie or session not found.
  *       '500':
- *         description: Error while updating the sessions.
+ *         description: Error while updating the session.
  */
 
 /**
@@ -135,11 +138,16 @@ router.post(
   sessionMiddleware,
   sessionController.create.bind(SessionController),
 )
-// router.put(
-//   '/movies/:movie_id/sessions/:id',
-//   sessionMiddleware,
-//   SessionController.update,
-// )
-// router.delete('/movies/:movie_id/sessions/:id', SessionController.delete)
+
+router.put(
+  '/movies/:movie_id/sessions/:id',
+  sessionMiddleware,
+  sessionController.update.bind(SessionController),
+)
+
+router.delete(
+  '/movies/:movie_id/sessions/:id',
+  sessionController.delete.bind(SessionController),
+)
 
 export default router
