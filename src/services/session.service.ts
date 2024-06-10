@@ -3,6 +3,7 @@ import { ISessionRepository } from 'repositories.interfaces/session.repository.i
 import { inject, injectable } from 'tsyringe'
 import createError from 'http-errors'
 import { ITicketRepository } from 'repositories.interfaces/ticket.repository.interface'
+import { Session } from '../models/session.model'
 
 @injectable()
 class SessionService {
@@ -40,6 +41,7 @@ class SessionService {
 
   async updateSession(sessionData: {
     id: number
+    movie_id: number
     room: string
     capacity: number
     day: string
@@ -62,7 +64,15 @@ class SessionService {
       throw new createError.Conflict('The session is already in use')
     }
 
-    return this.sessionRepository.updateSession(sessionData)
+    const updateSession = new Session()
+    updateSession.id = sessionData.id
+    updateSession.movie_id = sessionData.movie_id
+    updateSession.room = sessionData.room
+    updateSession.capacity = sessionData.capacity
+    updateSession.day = sessionData.day
+    updateSession.time = sessionData.time
+
+    return this.sessionRepository.updateSession(updateSession)
   }
 
   async deleteSession(sessionData: { id: number; movie_id: number }) {

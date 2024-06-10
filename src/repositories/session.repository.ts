@@ -4,9 +4,14 @@ import { ISessionRepository } from '../repositories.interfaces/session.repositor
 import { DeleteResult, Repository } from 'typeorm'
 
 class SessionRepository implements ISessionRepository {
-  constructor(private repository: Repository<Session>) {
+  private repository: Repository<Session>
+  constructor() {
     this.repository = AppDataSource.getRepository(Session)
   }
+
+  // async listTickets() {
+  //   return this.repository.find({ relations: ['Ticket'] })
+  // }
 
   async saveSession(session: Session) {
     return await this.repository.save(session)
@@ -18,9 +23,9 @@ class SessionRepository implements ISessionRepository {
   }
 
   async findById(id: number) {
-    const session = await this.repository.findOne({ where: { id: id } })
+    const sessionId = await this.repository.findOne({ where: { id: id } })
 
-    return session
+    return sessionId
   }
 
   async createSession(sessionData: {
@@ -29,7 +34,7 @@ class SessionRepository implements ISessionRepository {
     capacity: number
     day: string
     time: string
-  }): Promise<Session> {
+  }) {
     const { movie_id, room, capacity, day, time } = sessionData
 
     const session = this.repository.create({

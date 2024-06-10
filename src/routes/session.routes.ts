@@ -54,7 +54,11 @@ const sessionController = container.resolve(SessionController)
  *       500:
  *         description: Error while creating the session.
  */
-
+router.post(
+  '/movies/:movie_id/sessions',
+  sessionMiddleware,
+  sessionController.create.bind(SessionController),
+)
 /**
  * @swagger
  * /api/v1/movies/{movie_id}/sessions/{id}:
@@ -79,7 +83,7 @@ const sessionController = container.resolve(SessionController)
  *       content:
  *         application/json:
  *           schema:
- *              type: object
+ *             type: object
  *             properties:
  *               room:
  *                 type: string
@@ -101,6 +105,12 @@ const sessionController = container.resolve(SessionController)
  *       '500':
  *         description: Error while updating the sessions.
  */
+
+router.put(
+  '/movies/:movie_id/sessions/:id',
+  sessionMiddleware,
+  sessionController.update.bind(SessionController),
+)
 
 /**
  * @swagger
@@ -129,17 +139,9 @@ const sessionController = container.resolve(SessionController)
  *       '500':
  *         description: Error while deleting the session.
  */
-
-router.post(
-  '/movies/:movie_id/sessions',
-  sessionMiddleware,
-  sessionController.create.bind(SessionController),
+router.delete(
+  '/movies/:movie_id/sessions/:id',
+  sessionController.delete.bind(sessionController),
 )
-// router.put(
-//   '/movies/:movie_id/sessions/:id',
-//   sessionMiddleware,
-//   SessionController.update,
-// )
-// router.delete('/movies/:movie_id/sessions/:id', SessionController.delete)
 
 export default router

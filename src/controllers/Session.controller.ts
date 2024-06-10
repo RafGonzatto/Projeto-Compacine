@@ -35,13 +35,14 @@ class SessionController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      const id = parseInt(req.params.id)
+      const { id, movie_id } = req.params
       const { room, capacity, day, time } = req.body
 
       const service = container.resolve(SessionService)
 
       const session = await service.updateSession({
-        id,
+        id: parseInt(id),
+        movie_id: parseInt(movie_id),
         room,
         capacity,
         day,
