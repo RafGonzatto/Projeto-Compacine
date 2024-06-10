@@ -51,7 +51,7 @@ const movieController = container.resolve(MovieController)
  *           type: string
  *           format: date-time
  *           description: The movie release date
- *           example: '05/20/2024'
+ *           example: '2024/05/20'
  */
 /**
  * @swagger

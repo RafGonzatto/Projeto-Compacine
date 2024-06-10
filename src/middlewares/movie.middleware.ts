@@ -24,7 +24,7 @@ export const movieMiddleware = (
       description: 'Movie description',
       actors: ['Actor 1', 'Actor 2'],
       genre: 'Action',
-      release_date: 'MM/dd/yyyy',
+      release_date: 'yyyy/MM/dd',
     }
     const errorMessages = validation.error.errors.map(
       (error: { message: any }) => error.message,
