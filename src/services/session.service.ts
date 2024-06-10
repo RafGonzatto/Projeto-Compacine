@@ -2,14 +2,14 @@ import { ISession } from '../interfaces/session.interface'
 import { ISessionRepository } from '../repositories.interfaces/session.repository.interface'
 import { inject, injectable } from 'tsyringe'
 import createError from 'http-errors'
-// import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
+import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
 import { Session } from '../entitys/session.entity'
 
 @injectable()
 class SessionService {
   constructor(
     @inject('SessionRepository') private sessionRepository: ISessionRepository,
-    // @inject('TicketRepository') private ticketRepository: ITicketRepository,
+    @inject('TicketRepository') private ticketRepository: ITicketRepository,
   ) {}
 
   async createSession(sessionData: {
@@ -19,18 +19,21 @@ class SessionService {
     day: string
     time: string
   }): Promise<ISession> {
-    const movie = await this.sessionRepository.findById(sessionData.movie_id)
+    // const movie = await this.sessionRepository.findById(sessionData.movie_id)
 
-    if (!movie) {
-      throw new createError.NotFound('Movie does not exist')
-    }
+    // if (!movie) {
+    //   throw new createError.NotFound('Movie does not exist')
+    // }
 
-    const consultingSession = await this.sessionRepository.findRoomAndTime(
+    const consultingRoom = await this.sessionRepository.findRoom(
       sessionData.room,
+    )
+
+    const consultingTime = await this.sessionRepository.findTime(
       sessionData.time,
     )
 
-    if (consultingSession) {
+    if (consultingTime && consultingRoom) {
       throw new createError.Conflict('The session is already in use')
     }
 
@@ -53,12 +56,15 @@ class SessionService {
       throw new createError.Conflict('The session does not exist')
     }
 
-    const verifySession = await this.sessionRepository.findRoomAndTime(
+    const consultingRoom = await this.sessionRepository.findRoom(
       sessionData.room,
+    )
+
+    const consultingTime = await this.sessionRepository.findTime(
       sessionData.time,
     )
 
-    if (!verifySession) {
+    if (consultingTime && consultingRoom) {
       throw new createError.Conflict('The session is already in use')
     }
 
