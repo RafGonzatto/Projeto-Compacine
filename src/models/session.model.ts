@@ -3,6 +3,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -15,10 +16,13 @@ export class Session extends BaseEntity implements ISession {
   @PrimaryGeneratedColumn()
   id!: number
 
+  @Column({ type: 'integer' })
+  movie_id!: number
+
   @Column({ type: 'varchar', unique: true })
   room!: string
 
-  @Column({ type: 'integer'})
+  @Column({ type: 'integer' })
   capacity!: number
 
   @Column({ type: 'varchar', unique: true })
@@ -28,8 +32,9 @@ export class Session extends BaseEntity implements ISession {
   time!: string
 
   @ManyToOne(() => Movie, (movie) => movie.sessions)
+  @JoinColumn({ name: 'movie_id' })
   movie!: Movie
 
   @OneToMany(() => Ticket, (ticket) => ticket.session)
-  ticket!: Ticket
+  ticket!: Ticket[]
 }
