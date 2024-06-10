@@ -43,7 +43,7 @@ export class CreateTicketsTable1717618123897 implements MigrationInterface {
       new TableForeignKey({
         columnNames: ['session_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'sessions',
+        referencedTableName: 'Session',
         onDelete: 'CASCADE',
       }),
     )
