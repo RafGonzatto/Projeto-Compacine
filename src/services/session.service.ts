@@ -11,6 +11,7 @@ class SessionService {
   constructor(
     @inject('SessionRepository') private sessionRepository: ISessionRepository,
     @inject('TicketRepository') private ticketRepository: ITicketRepository,
+    @inject('MovieRepository') private movieRepository: IMovieRepository,
   ) {}
 
   async createSession(sessionData: {
@@ -20,11 +21,11 @@ class SessionService {
     day: string
     time: string
   }): Promise<ISession> {
-    // const movie = await this.sessionRepository.findById(sessionData.movie_id)
+    const movie = await this.movieRepository.getMovieById(sessionData.movie_id)
 
-    // if (!movie) {
-    //   throw new createError.NotFound('Movie does not exist')
-    // }
+    if (!movie) {
+      throw new createError.NotFound('Movie does not exist')
+    }
 
     const consultingRoom = await this.sessionRepository.findRoom(
       sessionData.room,
