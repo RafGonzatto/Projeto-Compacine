@@ -24,7 +24,8 @@ type deleteSessionRequest = {
 
 export interface ISessionRepository {
   findById(id: number): Promise<Session | null>
-  findRoomAndTime(room: string, time: string): Promise<Session | null>
+  findRoom(room: string): Promise<Session | null>
+  findTime(time: string): Promise<Session | null>
   createSession(data: createSessionRequest): Promise<Session>
   saveSession(session: Session): Promise<Session>
   updateSession(data: updateSessionRequest): Promise<Session>

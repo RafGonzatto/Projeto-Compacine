@@ -10,18 +10,26 @@ class SessionRepository implements ISessionRepository {
     this.sessionRepository = AppDataSource.getRepository(Session)
   }
 
-  // async listTickets() {
-  //   return this.repository.find({ relations: ['Ticket'] })
-  // }
+  async listTickets() {
+    return this.sessionRepository.find({ relations: ['Ticket'] })
+  }
 
   async saveSession(session: Session) {
     return await this.sessionRepository.save(session)
   }
 
-  async findRoomAndTime(room: string, time: string) {
+  async findRoom(room: string) {
     const session = await this.sessionRepository.findOne({
-      where: { room, time },
+      where: { room },
     })
+    return session
+  }
+
+  async findTime(time: string) {
+    const session = await this.sessionRepository.findOne({
+      where: { time },
+    })
+
     return session
   }
 
