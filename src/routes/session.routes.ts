@@ -135,7 +135,7 @@ router.put(
  *           type: integer
  *         description: ID of the session
  *     responses:
- *       '200':
+ *       '204':
  *         description: Session deleted successfully.
  *       '404':
  *         description: Movie or session not found.
