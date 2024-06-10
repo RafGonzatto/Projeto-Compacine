@@ -1,5 +1,5 @@
 import AppDataSource from '../database/connection'
-import { Ticket } from '../models/ticket.model'
+import { Ticket } from '../entitys/ticket.entity'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
 import { Repository } from 'typeorm'
 

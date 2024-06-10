@@ -1,18 +1,18 @@
 import { DeleteResult } from 'typeorm'
 import { ITicket } from '../interfaces/ticket.interface'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
-//import { ISessionRepository } from '../repositories.interfaces/session.repository.interface';
+import { ISessionRepository } from '../repositories.interfaces/session.repository.interface';
 import createError from 'http-errors'
 import { inject, injectable } from 'tsyringe'
-import { Ticket } from 'models/ticket.model'
+import { Ticket } from '../entitys/ticket.entity'
 
 @injectable()
 class TicketService {
   constructor(
     @inject('TicketRepository')
     private ticketRepository: ITicketRepository,
-    //  @inject('SessionRepository')
-    // private sessionRepository: ISessionRepository,
+     @inject('SessionRepository')
+    private sessionRepository: ISessionRepository,
   ) {}
 
   async createTicket(ticketData: {
@@ -21,10 +21,10 @@ class TicketService {
     chair: string
     value: number
   }): Promise<ITicket> {
-    // const session = await this.sessionRepository.findById(ticketData.session_id)
-    // if (!session) {
-    //   throw new createError.NotFound('Session not found')
-    // }
+    const session = await this.sessionRepository.findById(ticketData.session_id)
+    if (!session) {
+      throw new createError.NotFound('Session not found')
+    }
 
     const existingTicket = await this.ticketRepository.findSessionsChair(
       ticketData.session_id,
@@ -42,10 +42,10 @@ class TicketService {
     chair: string
     value: number
   }): Promise<Ticket> {
-    // const session = await this.sessionRepository.findById(ticketData.session_id)
-    // if (!session) {
-    //   throw new createError.NotFound('Session not found')
-    // }
+    const session = await this.sessionRepository.findById(ticketData.session_id)
+    if (!session) {
+      throw new createError.NotFound('Session not found')
+    }
     const ticket = await this.ticketRepository.findById(ticketData.id)
     if (!ticket) {
       throw new createError.NotFound('Ticket not found')

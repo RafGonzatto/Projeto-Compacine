@@ -1,5 +1,5 @@
 import AppDataSource from '../database/connection'
-import { Session } from '../models/session.model'
+import { Session } from '../entitys/session.entity'
 import { ISessionRepository } from '../repositories.interfaces/session.repository.interface'
 import { DeleteResult, Repository } from 'typeorm'
 

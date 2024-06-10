@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm'
 import { IMovie } from '../interfaces/movie.interface'
-import { Movie } from '../models/movie.model'
+import { Movie } from '../entitys/movie.entity'
 import AppDataSource from '../database/connection'
 import IMovieRepository from '../repositories.interfaces/movie.repository.interface'
 

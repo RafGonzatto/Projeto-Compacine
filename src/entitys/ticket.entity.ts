@@ -9,7 +9,7 @@ import {
   JoinColumn,
   Unique,
 } from 'typeorm'
-import { Session } from './session.model'
+import { Session } from './session.entity'
 import { ITicket } from '../interfaces/ticket.interface'
 
 @Entity('Ticket')

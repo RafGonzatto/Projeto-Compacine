@@ -3,7 +3,7 @@ import { ISessionRepository } from '../repositories.interfaces/session.repositor
 import { inject, injectable } from 'tsyringe'
 import createError from 'http-errors'
 // import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
-import { Session } from '../models/session.model'
+import { Session } from '../entitys/session.entity'
 
 @injectable()
 class SessionService {

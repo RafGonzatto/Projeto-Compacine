@@ -1,4 +1,4 @@
-import { Ticket } from '../models/ticket.model'
+import { Ticket } from '../entitys/ticket.entity'
 import { ITicket } from '../interfaces/ticket.interface'
 import { DeleteResult } from 'typeorm'
 

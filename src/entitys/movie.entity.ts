@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { IMovie } from '../interfaces/movie.interface'
-import { Session } from './session.model'
+import { Session } from './session.entity'
 
 @Entity('Movie')
 export class Movie extends BaseEntity implements IMovie {

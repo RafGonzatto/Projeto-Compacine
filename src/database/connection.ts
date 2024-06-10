@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm'
 import dotenv from 'dotenv'
 import path from 'path'
-import { Ticket } from '../models/ticket.model'
-import { Session } from '../models/session.model'
-import { Movie } from '../models/movie.model'
+import { Ticket } from '../entitys/ticket.entity'
+import { Session } from '../entitys/session.entity'
+import { Movie } from '../entitys/movie.entity'
 
 dotenv.config()
 
