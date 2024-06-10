@@ -1,7 +1,9 @@
 import { DataSource } from 'typeorm'
 import dotenv from 'dotenv'
 import path from 'path'
-import { RepositorioModels } from '../models/models'
+import { Ticket } from '../models/ticket.model'
+import { Session } from '../models/session.model'
+import { Movie } from '../models/movie.model'
 
 dotenv.config()
 
@@ -17,7 +19,7 @@ const AppDataSource = new DataSource({
   database: path.join(srcDir, DB_PATH),
   synchronize: false,
   logging: true,
-  entities: RepositorioModels,
+  entities: [Session, Ticket, Movie],
   migrations: ['dist/database/migrations/*.js'],
 })
 
