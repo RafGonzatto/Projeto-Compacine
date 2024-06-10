@@ -4,21 +4,25 @@ import { ISessionRepository } from '../repositories.interfaces/session.repositor
 import { DeleteResult, Repository } from 'typeorm'
 
 class SessionRepository implements ISessionRepository {
-  constructor(private repository: Repository<Session>) {
-    this.repository = AppDataSource.getRepository(Session)
+  private sessionRepository: Repository<Session>
+
+  constructor() {
+    this.sessionRepository = AppDataSource.getRepository(Session)
   }
 
   async saveSession(session: Session) {
-    return await this.repository.save(session)
+    return await this.sessionRepository.save(session)
   }
 
   async findRoomAndTime(room: string, time: string) {
-    const session = await this.repository.findOne({ where: { room, time } })
+    const session = await this.sessionRepository.findOne({
+      where: { room, time },
+    })
     return session
   }
 
   async findById(id: number) {
-    const session = await this.repository.findOne({ where: { id: id } })
+    const session = await this.sessionRepository.findOne({ where: { id: id } })
 
     return session
   }
@@ -32,7 +36,7 @@ class SessionRepository implements ISessionRepository {
   }): Promise<Session> {
     const { movie_id, room, capacity, day, time } = sessionData
 
-    const session = this.repository.create({
+    const session = this.sessionRepository.create({
       movie_id: movie_id,
       room: room,
       capacity: capacity,
@@ -52,7 +56,7 @@ class SessionRepository implements ISessionRepository {
   }): Promise<Session> {
     const { id, room, capacity, day, time } = sessionData
 
-    const session = await this.repository.findOne({
+    const session = await this.sessionRepository.findOne({
       where: { id: id },
     })
 
@@ -65,14 +69,14 @@ class SessionRepository implements ISessionRepository {
     session.day = day
     session.time = time
 
-    return await this.repository.save(session)
+    return await this.sessionRepository.save(session)
   }
 
   async deleteSession(sessionData: {
     id: number
     movie_id: number
   }): Promise<DeleteResult> {
-    return await this.repository.delete({
+    return await this.sessionRepository.delete({
       id: sessionData.id,
       movie_id: sessionData.movie_id,
     })
