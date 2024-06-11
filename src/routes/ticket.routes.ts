@@ -41,9 +41,6 @@ const ticketController = container.resolve(TicketController)
  *           schema:
  *             type: object
  *             properties:
- *               session_id:
- *                 type: integer
- *                 example: 1
  *               chair:
  *                 type: string
  *                 example: "b1"
@@ -92,7 +89,7 @@ router.post(
  *           type: integer
  *         description: Ticket's id
  *     responses:
- *       '200':
+ *       '204':
  *         description: Ticket deleted with success
  *       '404':
  *         description: Ticket not found with this id and session
