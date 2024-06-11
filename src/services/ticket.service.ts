@@ -1,7 +1,7 @@
 import { DeleteResult } from 'typeorm'
 import { ITicket } from '../interfaces/ticket.interface'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
-import { ISessionRepository } from '../repositories.interfaces/session.repository.interface';
+import { ISessionRepository } from '../repositories.interfaces/session.repository.interface'
 import createError from 'http-errors'
 import { inject, injectable } from 'tsyringe'
 import { Ticket } from '../entitys/ticket.entity'
@@ -11,7 +11,7 @@ class TicketService {
   constructor(
     @inject('TicketRepository')
     private ticketRepository: ITicketRepository,
-     @inject('SessionRepository')
+    @inject('SessionRepository')
     private sessionRepository: ISessionRepository,
   ) {}
 
@@ -28,7 +28,8 @@ class TicketService {
 
     const existingTicket = await this.ticketRepository.findSessionsChair(
       ticketData.session_id,
-      ticketData.chair, 0
+      ticketData.chair,
+      0,
     )
     if (existingTicket) {
       throw new createError.Conflict('Chair already taken in this session')
@@ -50,7 +51,11 @@ class TicketService {
     if (!ticket) {
       throw new createError.NotFound('Ticket not found')
     }
-    const existingTicket = await this.ticketRepository.findSessionsChair(ticketData.session_id, ticketData.chair, ticketData.id)
+    const existingTicket = await this.ticketRepository.findSessionsChair(
+      ticketData.session_id,
+      ticketData.chair,
+      ticketData.id,
+    )
     if (existingTicket) {
       throw new createError.Conflict('Chair already taken in this session')
     }

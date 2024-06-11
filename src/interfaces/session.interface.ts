@@ -1,4 +1,4 @@
-import { Ticket } from "entitys/ticket.entity"
+import { Ticket } from 'entitys/ticket.entity'
 
 export interface ISession {
   id: number

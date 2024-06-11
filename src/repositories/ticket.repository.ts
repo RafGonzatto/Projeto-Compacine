@@ -16,10 +16,11 @@ class TicketRepository implements ITicketRepository {
   }
   async findSessionsChair(
     session_id: number,
-    chair: string, id: number
+    chair: string,
+    id: number,
   ): Promise<Ticket | null> {
     const sessionsChair = await this.repository.findOne({
-      where: { session_id, chair, id: Not(id) }, 
+      where: { session_id, chair, id: Not(id) },
     })
     return sessionsChair
   }

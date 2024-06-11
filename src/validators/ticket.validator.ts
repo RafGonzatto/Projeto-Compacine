@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-
 const createTicket = z.object({
   session_id: z.number().positive(),
   chair: z.string(),
