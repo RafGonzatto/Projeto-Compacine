@@ -61,29 +61,8 @@ class SessionRepository implements ISessionRepository {
     return await this.saveSession(session)
   }
 
-  async updateSession(sessionData: {
-    id: number
-    room: string
-    capacity: number
-    day: string
-    time: string
-  }): Promise<Session> {
-    const { id, room, capacity, day, time } = sessionData
-
-    const session = await this.sessionRepository.findOne({
-      where: { id: id },
-    })
-
-    if (!session) {
-      throw new Error('Session does not exist')
-    }
-
-    session.room = room
-    session.capacity = capacity
-    session.day = day
-    session.time = time
-
-    return await this.sessionRepository.save(session)
+  async updateSession(sessionData: Session): Promise<Session> {
+    return await this.sessionRepository.save(sessionData)
   }
 
   async deleteSession(sessionData: {
