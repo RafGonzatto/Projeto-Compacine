@@ -53,3 +53,4 @@ AppDataSource.initialize()
     console.error('Erro ao conectar ao banco de dados:', error)
     process.exit(1)
   })
+  export default app;

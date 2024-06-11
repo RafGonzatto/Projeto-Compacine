@@ -21,8 +21,7 @@ const movieSchema = z.object({
     z.date().refine((date) => !isNaN(date.getTime()), {
       message: 'Date format is invalid',
     }),
-  ),
-  sessions: z.array(z.any()).optional(),
+  )
 })
 
 export { movieSchema }

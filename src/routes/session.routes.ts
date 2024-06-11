@@ -46,7 +46,7 @@ const sessionController = container.resolve(SessionController)
  *                 type: string
  *                 example: "19:20:00"
  *     responses:
- *       '200':
+ *       '201':
  *         description: Session was successfully created.
  *       '400':
  *         description: Bad request, the request body is invalid.

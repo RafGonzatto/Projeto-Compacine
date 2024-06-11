@@ -18,7 +18,7 @@ const AppDataSource = new DataSource({
   type: 'sqlite',
   database: path.join(srcDir, DB_PATH),
   synchronize: false,
-  logging: true,
+  logging: false,
   entities: [Session, Ticket, Movie],
   migrations: ['dist/database/migrations/*.js'],
 })
