@@ -1,7 +1,7 @@
 import AppDataSource from '../database/connection'
 import { Ticket } from '../entitys/ticket.entity'
 import { ITicketRepository } from '../repositories.interfaces/ticket.repository.interface'
-import { Repository } from 'typeorm'
+import { Not, Repository } from 'typeorm'
 
 class TicketRepository implements ITicketRepository {
   private repository: Repository<Ticket>
@@ -16,10 +16,10 @@ class TicketRepository implements ITicketRepository {
   }
   async findSessionsChair(
     session_id: number,
-    chair: string,
+    chair: string, id: number
   ): Promise<Ticket | null> {
     const sessionsChair = await this.repository.findOne({
-      where: { session_id, chair },
+      where: { session_id, chair, id: Not(id) }, 
     })
     return sessionsChair
   }

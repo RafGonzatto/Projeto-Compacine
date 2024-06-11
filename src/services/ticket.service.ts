@@ -28,7 +28,7 @@ class TicketService {
 
     const existingTicket = await this.ticketRepository.findSessionsChair(
       ticketData.session_id,
-      ticketData.chair,
+      ticketData.chair, 0
     )
     if (existingTicket) {
       throw new createError.Conflict('Chair already taken in this session')
@@ -50,7 +50,7 @@ class TicketService {
     if (!ticket) {
       throw new createError.NotFound('Ticket not found')
     }
-    const existingTicket = await this.ticketRepository.findSessionsChair(ticketData.session_id, ticketData.chair)
+    const existingTicket = await this.ticketRepository.findSessionsChair(ticketData.session_id, ticketData.chair, ticketData.id)
     if (existingTicket) {
       throw new createError.Conflict('Chair already taken in this session')
     }
