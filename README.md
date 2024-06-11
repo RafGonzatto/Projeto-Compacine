@@ -207,6 +207,17 @@ Once the application is running, you can access the API documentation at `http:/
 - **Delete a ticket**
   ```http
   DELETE /api/v1/movies/{movie_id}/sessions/{session_id}/tickets/{id}
+
+### Running Tests
+
+The application includes a suite of tests written with Jest. To run the tests, use the following commands:
+
+- **Run all tests**
+  ```sh
+  npm run test
+- **Run tests in watch mode**
+  ```sh
+  npm run test:watch
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
