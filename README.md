@@ -210,14 +210,28 @@ Once the application is running, you can access the API documentation at `http:/
 
 ### Running Tests
 
-The application includes a suite of tests written with Jest. To run the tests, use the following commands:
+This application includes a comprehensive suite of endpoint tests written using Jest and supertest. To run the tests:
 
-- **Run all tests**
-  ```sh
-  npm run test
-- **Run tests in watch mode**
-  ```sh
-  npm run test:watch
+1. **Create Migrations**: Ensure that your database schema is set up correctly.
+
+    ```bash
+    npm run migrations
+    ```
+
+2. **Initialize the Server**: Start the application server in a terminal using the appropriate command.
+
+    ```bash
+    npm run dev
+    ```
+
+3. **Run Tests**: Open another terminal window and execute the following command to run the test suite.
+
+    ```bash
+    npm run test
+    ```
+
+    This command will execute all the tests in the suite, interacting with the running server to validate the functionality of the endpoints.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
