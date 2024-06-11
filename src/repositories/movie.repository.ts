@@ -16,7 +16,7 @@ class MovieRepository implements IMovieRepository {
   }
 
   async getMovieById(id: number) {
-    return this.repository.findOne({ where: { id }, relations: ['sessions'] })
+    return this.repository.findOne({ where: { id }, relations: ['sessions.tickets'] })
   }
 
   async getMovieByName(name: string) {
