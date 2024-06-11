@@ -30,4 +30,9 @@ export interface ISessionRepository {
   saveSession(session: Session): Promise<Session>
   updateSession(data: updateSessionRequest): Promise<Session>
   deleteSession(id: deleteSessionRequest): Promise<DeleteResult>
+  findConflictingSession(
+    room: string,
+    time: string,
+    sessionId: number,
+  ): Promise<Session | null>
 }

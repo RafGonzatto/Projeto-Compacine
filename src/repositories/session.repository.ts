@@ -1,7 +1,7 @@
 import AppDataSource from '../database/connection'
 import { Session } from '../entitys/session.entity'
 import { ISessionRepository } from '../repositories.interfaces/session.repository.interface'
-import { DeleteResult, Repository } from 'typeorm'
+import { DeleteResult, Not, Repository } from 'typeorm'
 
 class SessionRepository implements ISessionRepository {
   private sessionRepository: Repository<Session>
@@ -93,6 +93,16 @@ class SessionRepository implements ISessionRepository {
     return await this.sessionRepository.delete({
       id: sessionData.id,
       movie_id: sessionData.movie_id,
+    })
+  }
+
+  async findConflictingSession(room: string, time: string, sessionId: number) {
+    return await this.sessionRepository.findOne({
+      where: {
+        room,
+        time,
+        id: Not(sessionId),
+      },
     })
   }
 }

@@ -58,16 +58,17 @@ class SessionService {
       throw new createError.Conflict('The session does not exist')
     }
 
-    const consultingRoom = await this.sessionRepository.findRoom(
-      sessionData.room,
-    )
+    const conflictingSession =
+      await this.sessionRepository.findConflictingSession(
+        sessionData.room,
+        sessionData.time,
+        sessionData.id,
+      )
 
-    const consultingTime = await this.sessionRepository.findTime(
-      sessionData.time,
-    )
-
-    if (consultingTime && consultingRoom) {
-      throw new createError.Conflict('The session is already in use')
+    if (conflictingSession) {
+      throw new createError.Conflict(
+        'The session is already in use by another session',
+      )
     }
 
     const updateSession = new Session()
